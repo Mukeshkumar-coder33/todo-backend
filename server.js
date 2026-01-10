@@ -2,33 +2,22 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-
 const app = express();
-
-// Middleware
 app.use(express.json());
-
 app.use(cors({
   origin: [
     'https://todo-frontend-chi-seven.vercel.app',
     'https://todo-frontend-l87h1pywl-mukesh-kumars-projects-c578aa2a.vercel.app'
   ]
 }));
-
-// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected ✅'))
   .catch((err) => console.log('MongoDB connection error:', err));
-
-// Todo schema
 const todoSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true }
 });
-
 const Todo = mongoose.model('Todo', todoSchema);
-
-// Routes
 app.post('/todos', async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -40,7 +29,6 @@ app.post('/todos', async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
-
 app.get('/todos', async (req, res) => {
   try {
     const todos = await Todo.find();
@@ -50,7 +38,6 @@ app.get('/todos', async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
-
 app.put('/todos/:id', async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -76,7 +63,5 @@ app.delete('/todos/:id', async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
-
-// Listen
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT} ✅`));
