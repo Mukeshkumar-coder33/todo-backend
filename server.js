@@ -8,9 +8,11 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// Allow frontend deployed on Vercel
 app.use(cors({
-  origin: 'https://todo-frontend-chi-seven.vercel.app'
+  origin: [
+    'https://todo-frontend-chi-seven.vercel.app',
+    'https://todo-frontend-l87h1pywl-mukesh-kumars-projects-c578aa2a.vercel.app'
+  ]
 }));
 
 // MongoDB connection
