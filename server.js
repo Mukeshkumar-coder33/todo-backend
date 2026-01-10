@@ -4,12 +4,8 @@ const cors = require('cors');
 require('dotenv').config();
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: [
-    'https://todo-frontend-chi-seven.vercel.app',
-    'https://todo-frontend-l87h1pywl-mukesh-kumars-projects-c578aa2a.vercel.app'
-  ]
-}));
+app.use(cors());
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected ✅'))
   .catch((err) => console.log('MongoDB connection error:', err));
